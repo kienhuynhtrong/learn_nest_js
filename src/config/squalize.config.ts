@@ -1,6 +1,6 @@
 import { ConfigService } from "@nestjs/config";
 import { SequelizeModuleOptions } from "@nestjs/sequelize";
-import { User, Category, Product, ProductVariant } from "@/models";
+import { User, Category, Product, ProductVariant, Ingredient, ProductIngredient } from "@/models";
 
 export const squalizeConfig = (configService: ConfigService): SequelizeModuleOptions => {
   return {
@@ -12,11 +12,14 @@ export const squalizeConfig = (configService: ConfigService): SequelizeModuleOpt
     database: configService.get<string>('DB_DATABASE'),
     synchronize: true,
     autoLoadModels: true,
+    logging: false,
     models: [
       User,
       Category,
       Product,
-      ProductVariant
+      ProductVariant,
+      Ingredient,
+      ProductIngredient
     ]
   }
 }

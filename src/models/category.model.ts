@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
 import { Product } from "./product.model";
+import { Ingredient } from "./ingredient.model";
 
 @Table({ tableName: 'categories' })
 export class Category extends Model<Category> {
@@ -36,4 +37,7 @@ export class Category extends Model<Category> {
 
   @HasMany(() => Product)
   products: Product[];
+
+  @HasMany(() => Ingredient)
+  ingredients: Ingredient[];
 }

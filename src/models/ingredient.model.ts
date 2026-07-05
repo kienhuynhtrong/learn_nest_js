@@ -1,11 +1,10 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasMany, BelongsToMany } from "sequelize-typescript";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany } from "sequelize-typescript";
 import { Category } from "./category.model";
-import { ProductVariant } from "./product-variant.model";
-import { Ingredient } from "./ingredient.model";
+import { Product } from "./product.model";
 import { ProductIngredient } from "./product-ingredient.model";
 
-@Table({ tableName: 'products' })
-export class Product extends Model<Product> {
+@Table({ tableName: 'ingredients' })
+export class Ingredient extends Model<Ingredient> {
   @Column({
     allowNull: false,
     type: DataType.STRING,
@@ -14,10 +13,9 @@ export class Product extends Model<Product> {
 
   @Column({
     allowNull: false,
-    unique: true,
     type: DataType.STRING,
   })
-  slug: string;
+  imageUrl: string;
 
   @Column({
     type: DataType.TEXT,
@@ -25,16 +23,10 @@ export class Product extends Model<Product> {
   description: string;
 
   @Column({
-    allowNull: false,
     type: DataType.INTEGER,
+    defaultValue: 0,
   })
-  basePrice: number;
-
-  @Column({
-    allowNull: false,
-    type: DataType.STRING,
-  })
-  imageUrl: string;
+  price: number;
 
   @Column({
     type: DataType.BOOLEAN,
@@ -46,7 +38,7 @@ export class Product extends Model<Product> {
     type: DataType.BOOLEAN,
     defaultValue: false,
   })
-  isFeatured: boolean;
+  isRequired: boolean;
 
   @ForeignKey(() => Category)
   @Column({
@@ -58,9 +50,6 @@ export class Product extends Model<Product> {
   @BelongsTo(() => Category)
   category: Category;
 
-  @HasMany(() => ProductVariant)
-  productVariants: ProductVariant[];
-
-  @BelongsToMany(() => Ingredient, () => ProductIngredient)
-  ingredients: Ingredient[];
+  @BelongsToMany(() => Product, () => ProductIngredient)
+  products: Product[];
 }
