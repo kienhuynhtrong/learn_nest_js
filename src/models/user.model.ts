@@ -1,4 +1,9 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import { Table, Column, Model, DataType, HasMany, HasOne } from "sequelize-typescript";
+import { Address } from "./address.model";
+import { Order } from "./order.model";
+import { Carts } from "./carts.model";
+import { UserCoupon } from "./user-coupon.model";
+import { Review } from "./review.model";
 
 @Table({ tableName: 'users' })
 export class User extends Model<User> {
@@ -42,4 +47,19 @@ export class User extends Model<User> {
     type: DataType.STRING,
   })
   provider: string;
+
+  @HasMany(() => Address)
+  addresses: Address[];
+
+  @HasMany(() => Order)
+  orders: Order[];
+
+  @HasOne(() => Carts)
+  cart: Carts;
+
+  @HasMany(() => UserCoupon)
+  userCoupons: UserCoupon[];
+
+  @HasMany(() => Review)
+  reviews: Review[];
 }

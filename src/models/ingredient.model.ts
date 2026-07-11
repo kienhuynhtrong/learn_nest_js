@@ -1,7 +1,9 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany } from "sequelize-typescript";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany, HasMany } from "sequelize-typescript";
 import { Category } from "./category.model";
 import { Product } from "./product.model";
 import { ProductIngredient } from "./product-ingredient.model";
+import { OrderItem } from "./order-item.model";
+import { OrderItemIngredient } from "./order-item-ingredient.model";
 
 @Table({ tableName: 'ingredients' })
 export class Ingredient extends Model<Ingredient> {
@@ -52,4 +54,10 @@ export class Ingredient extends Model<Ingredient> {
 
   @BelongsToMany(() => Product, () => ProductIngredient)
   products: Product[];
+
+  @BelongsToMany(() => OrderItem, () => OrderItemIngredient)
+  orderItems: OrderItem[];
+
+  @HasMany(() => OrderItemIngredient)
+  orderItemIngredients: OrderItemIngredient[];
 }

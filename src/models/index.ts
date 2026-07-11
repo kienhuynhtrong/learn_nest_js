@@ -4,5 +4,12 @@ export { Product } from './product.model';
 export { ProductVariant } from './product-variant.model';
 export { Ingredient } from './ingredient.model';
 export { ProductIngredient } from './product-ingredient.model';
-
-
+export { Address } from './address.model';
+export { Order } from './order.model';
+export { OrderItem } from './order-item.model';
+export { OrderItemIngredient } from './order-item-ingredient.model';
+export { Carts } from './carts.model';
+export { CartItem } from './cart-item.model';
+export { Coupon } from './coupon.model';
+export { UserCoupon } from './user-coupon.model';
+export { Review } from './review.model';

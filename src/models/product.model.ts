@@ -3,6 +3,9 @@ import { Category } from "./category.model";
 import { ProductVariant } from "./product-variant.model";
 import { Ingredient } from "./ingredient.model";
 import { ProductIngredient } from "./product-ingredient.model";
+import { OrderItem } from "./order-item.model";
+import { CartItem } from "./cart-item.model";
+import { Review } from "./review.model";
 
 @Table({ tableName: 'products' })
 export class Product extends Model<Product> {
@@ -63,4 +66,13 @@ export class Product extends Model<Product> {
 
   @BelongsToMany(() => Ingredient, () => ProductIngredient)
   ingredients: Ingredient[];
+
+  @HasMany(() => OrderItem)
+  orderItems: OrderItem[];
+
+  @HasMany(() => CartItem)
+  cartItems: CartItem[];
+
+  @HasMany(() => Review)
+  reviews: Review[];
 }

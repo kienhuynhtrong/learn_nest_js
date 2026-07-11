@@ -1,5 +1,7 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
 import { Product } from "./product.model";
+import { OrderItem } from "./order-item.model";
+import { CartItem } from "./cart-item.model";
 
 @Table({ tableName: 'product_variants' })
 export class ProductVariant extends Model<ProductVariant> {
@@ -42,4 +44,10 @@ export class ProductVariant extends Model<ProductVariant> {
 
   @BelongsTo(() => Product)
   product: Product;
+
+  @HasMany(() => OrderItem)
+  orderItems: OrderItem[];
+
+  @HasMany(() => CartItem)
+  cartItems: CartItem[];
 }
