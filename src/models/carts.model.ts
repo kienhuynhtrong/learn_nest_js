@@ -4,13 +4,6 @@ import { CartItem } from "./cart-item.model";
 
 @Table({ tableName: 'carts' })
 export class Carts extends Model<Carts> {
-  @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  })
-  id: number;
-
   @ForeignKey(() => User)
   @Column({
     allowNull: false,

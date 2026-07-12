@@ -4,13 +4,6 @@ import { UserCoupon } from "./user-coupon.model";
 @Table({ tableName: 'coupons' })
 export class Coupon extends Model<Coupon> {
   @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  })
-  id: number;
-
-  @Column({
     allowNull: false,
     unique: true,
     type: DataType.STRING,

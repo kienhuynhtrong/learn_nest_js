@@ -5,13 +5,6 @@ import { Coupon } from "./coupon.model";
 @Table({ tableName: 'user_coupons' })
 export class UserCoupon extends Model<UserCoupon> {
   @Column({
-    type: DataType.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  })
-  id: number;
-
-  @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
   })
