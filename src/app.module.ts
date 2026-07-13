@@ -3,6 +3,7 @@ import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { squalizeConfig } from './config/squalize.config';
 import { UserModule } from './modules/user/user.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserModule } from './modules/user/user.module';
       inject: [ConfigService],
     }),
     UserModule,
+    CategoryModule,
   ]
 })
 export class AppModule { }
