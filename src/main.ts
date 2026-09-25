@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { TransformInterceptor } from './common/interceptor/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +18,9 @@ async function bootstrap() {
       forbidNonWhitelisted: true
     }),
   );
+
+  // ✅ INTERCEPTOR: Chuẩn hóa định dạng Response trả về toàn cục
+  app.useGlobalInterceptors(new TransformInterceptor());
   const configService = new ConfigService();
   console.log(`${configService.get<string>('DB_HOST')}`);
   const port = configService.get<number>('PORT') ?? 3000;
