@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptor/transform.interceptor';
+import { HttpExceptionFilter } from './common/filter/all-exception-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +22,9 @@ async function bootstrap() {
 
   // ✅ INTERCEPTOR: Chuẩn hóa định dạng Response trả về toàn cục
   app.useGlobalInterceptors(new TransformInterceptor());
+
+  // ✅ FILTER: Bắt và chuẩn hóa định dạng Exception/lỗi trả về toàn cục
+  app.useGlobalFilters(new HttpExceptionFilter());
   const configService = new ConfigService();
   console.log(`${configService.get<string>('DB_HOST')}`);
   const port = configService.get<number>('PORT') ?? 3000;

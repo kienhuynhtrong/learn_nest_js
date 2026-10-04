@@ -3,4 +3,5 @@ export interface ResponseFormat<T> {
   message: string;
   data: T;
   timestamp: string;
+  duration: string;
 }

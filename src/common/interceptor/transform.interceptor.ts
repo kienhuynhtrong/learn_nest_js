@@ -16,8 +16,13 @@ export class TransformInterceptor<T>
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<ResponseFormat<T>> {
-    const response = context.switchToHttp().getResponse();
+    const ctx = context.switchToHttp();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
     const statusCode = response.statusCode;
+
+    // Lấy startTime do StartTimingMiddleware gắn vào request, hoặc fallback Date.now()
+    const startTime = request['startTime'] || Date.now();
 
     return next.handle().pipe(
       map((data) => ({
@@ -25,6 +30,7 @@ export class TransformInterceptor<T>
         message: 'Success',
         data: data ?? null,
         timestamp: new Date().toISOString(),
+        duration: `${Date.now() - startTime}ms`,
       })),
     );
   }

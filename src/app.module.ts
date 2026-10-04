@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { StartTimingMiddleware } from './common/midderwares/start-time.mideerwares';
 import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { squalizeConfig } from './config/squalize.config';
@@ -21,4 +22,8 @@ import { CategoryModule } from './modules/category/category.module';
     CategoryModule,
   ]
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(StartTimingMiddleware).forRoutes('*');
+  }
+}
