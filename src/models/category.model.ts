@@ -1,43 +1,34 @@
-import { Table, Column, Model, DataType, HasMany } from "sequelize-typescript";
-import { Product } from "./product.model";
-import { Ingredient } from "./ingredient.model";
+import { Table, Column, Model, DataType, BeforeValidate, BeforeCreate, BeforeUpdate } from 'sequelize-typescript';
+import { Helper } from '../common/utils/helper';
 
 @Table({ tableName: 'categories' })
 export class Category extends Model<Category> {
-  @Column({
-    allowNull: false,
-    unique: true,
-    type: DataType.STRING,
-  })
+  @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
-  @Column({
-    allowNull: false,
-    unique: true,
-    type: DataType.STRING,
-  })
+  @Column({ type: DataType.STRING, unique: true })
   slug: string;
 
-  @Column({
-    type: DataType.TEXT,
-  })
-  description: string;
-
-  @Column({
-    type: DataType.INTEGER,
-    defaultValue: 0,
-  })
+  @Column({ type: DataType.INTEGER, defaultValue: 1 })
   sortOrder: number;
 
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: true,
-  })
+  @Column({ type: DataType.BOOLEAN, defaultValue: true })
   isActive: boolean;
 
-  @HasMany(() => Product)
-  products: Product[];
+  // Tự động tạo slug trước khi tạo mới (Create)
+  @BeforeValidate
+  @BeforeCreate
+  static createSlug(instance: Category) {
+    if (instance.name && !instance.slug) {
+      instance.slug = Helper.makeSlug(instance.name);
+    }
+  }
 
-  @HasMany(() => Ingredient)
-  ingredients: Ingredient[];
+  // Tự động cập nhật slug khi update tên (Update)
+  @BeforeUpdate
+  static updateSlug(instance: Category) {
+    if (instance.changed('name')) {
+      instance.slug = Helper.makeSlug(instance.name);
+    }
+  }
 }
