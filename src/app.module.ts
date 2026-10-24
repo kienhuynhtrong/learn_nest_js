@@ -3,8 +3,10 @@ import { StartTimingMiddleware } from './common/midderwares/start-time.mideerwar
 import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { squalizeConfig } from './config/squalize.config';
-import { UserModule } from './modules/user/user.module';
 import { CategoryModule } from './modules/category/category.module';
+
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,8 +20,9 @@ import { CategoryModule } from './modules/category/category.module';
       ),
       inject: [ConfigService],
     }),
-    UserModule,
     CategoryModule,
+    UserModule,
+    AuthModule,
   ]
 })
 export class AppModule implements NestModule {
